@@ -1,4 +1,4 @@
-<li>
+<div class="list__item">
   <h4>
     <a [routerLink]="['/posts', entity.id]" [title]="entity.title">{{
       entity.title
@@ -6,4 +6,4 @@
   </h4>
   <p *ngIf="entity.body">{{ entity.body }}</p>
   <p><button (click)="onClick(entity)">Remove</button></p>
-</li>
+</div>
