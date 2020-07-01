@@ -1,3 +1,4 @@
+import { PostDetailResolveService } from './services/post-detail-resolve.service';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PostComponent } from './post.component';
@@ -5,7 +6,13 @@ import { PostDetailsComponent } from './components/post-details/post-details.com
 
 const routes: Routes = [
   { path: 'posts', component: PostComponent },
-  { path: 'posts/:id', component: PostDetailsComponent },
+  {
+    path: 'posts/:id',
+    resolve: {
+      entity: PostDetailResolveService,
+    },
+    component: PostDetailsComponent,
+  },
 ];
 
 @NgModule({

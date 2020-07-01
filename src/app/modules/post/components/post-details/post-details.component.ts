@@ -19,11 +19,14 @@ export class PostDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const postId = +params.get('id');
-      console.log(postId);
+    // this.route.paramMap.subscribe((params) => {
+    //   const postId = +params.get('id');
+    //   console.log(postId);
+    //   this.entity = this.postService.show(postId);
+    // });
 
-      this.entity = this.postService.show(postId);
+    this.route.data.subscribe((data: { entity: Post }) => {
+      this.entity = data.entity;
     });
   }
 
