@@ -7,13 +7,15 @@ import {
   UrlTree,
   Router,
   CanActivateChild,
+  CanLoad,
+  Route,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
@@ -43,5 +45,22 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree> {
     console.log('Auth guard canActivateChild');
     return true;
+  }
+
+  canLoad(
+    route: Route,
+    segments: import('@angular/router').UrlSegment[],
+  ):
+    | boolean
+    | UrlTree
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree> {
+    console.log('Auth guard canLoad.');
+
+    if (this.authService.isLoggedIn) {
+      return true;
+    }
+
+    this.router.navigate(['/demo/login']);
   }
 }

@@ -12,14 +12,13 @@ import { DemoModule } from './modules/demo/demo.module';
 import { MessageBoxComponent } from './core/components/message-box/message-box.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, PageNotFoundComponent, MessageBoxComponent],
-  imports: [
-    BrowserModule,
-    PostModule,
-    UserModule,
-    DemoModule,
-    AppRoutingModule,
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    PageNotFoundComponent,
+    MessageBoxComponent,
   ],
+  imports: [BrowserModule, PostModule, UserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
