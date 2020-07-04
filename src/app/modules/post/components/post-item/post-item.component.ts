@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { PostService } from './../../services/post.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Post } from '../../models/post.model';
 
@@ -13,11 +15,15 @@ export class PostItemComponent implements OnInit {
   @Output()
   remove = new EventEmitter();
 
-  constructor() {}
+  constructor(private postService: PostService) {}
 
   ngOnInit(): void {}
 
   onClick(entity: Post): void {
     this.remove.emit(entity);
+  }
+
+  addToList(entity: Post): void {
+    this.postService.addToList(entity).subscribe();
   }
 }

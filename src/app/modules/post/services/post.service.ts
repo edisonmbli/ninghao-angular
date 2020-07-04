@@ -9,6 +9,7 @@ import { catchError, retry, retryWhen, delay, take } from 'rxjs/operators';
 })
 export class PostService {
   postsApi = 'http://localhost:3000/posts';
+  myListApi = 'http://localhost:3000/my-list';
 
   constructor(private http: HttpClient) {}
 
@@ -26,5 +27,21 @@ export class PostService {
 
   handleError(error: HttpErrorResponse): any {
     return throwError('Something went wrong.');
+  }
+
+  addToList(entity: Post): Observable<any> {
+    return this.http.post<Post>(this.myListApi, entity);
+  }
+
+  getMyList(): Observable<any> {
+    return this.http.get<Post[]>(this.myListApi);
+  }
+
+  removeItemFromList(entityId: number): Observable<any> {
+    return this.http.delete(`${this.myListApi}/${entityId}`);
+  }
+
+  update(id: number, entity: Post): Observable<any> {
+    return this.http.put<Post>(`${this.postsApi}/${id}`, entity);
   }
 }

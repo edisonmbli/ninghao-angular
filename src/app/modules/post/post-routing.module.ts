@@ -1,3 +1,4 @@
+import { PostEditComponent } from './components/post-edit/post-edit.component';
 import { PostDetailResolveService } from './services/post-detail-resolve.service';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,10 @@ const routes: Routes = [
       entity: PostDetailResolveService,
     },
     component: PostDetailsComponent,
+  },
+  {
+    path: 'posts/:id/edit',
+    component: PostEditComponent,
   },
 ];
 
