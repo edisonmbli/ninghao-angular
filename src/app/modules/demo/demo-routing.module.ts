@@ -1,3 +1,4 @@
+import { ObservableDemoComponent } from './observable-demo/observable-demo.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ChildRoutesComponent } from './child-routes/child-routes.component';
 import { DemoComponent } from './demo.component';
@@ -23,6 +24,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('./admin/admin.module').then((module) => module.AdminModule),
         canLoad: [AuthGuard],
+      },
+      {
+        path: 'observable',
+        component: ObservableDemoComponent,
       },
     ],
   },
