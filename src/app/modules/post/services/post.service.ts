@@ -1,22 +1,30 @@
+import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Post } from '../models/post.model';
-import { posts } from '../posts';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, retry, retryWhen, delay, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
-  entities: Post[];
+  postsApi = 'http://localhost:3000/posts';
 
-  constructor() {
-    this.entities = posts;
+  constructor(private http: HttpClient) {}
+
+  index(): Observable<any> {
+    return this.http.get(this.postsApi).pipe(
+      catchError(this.handleError),
+      // retry(3),
+      retryWhen((errors) => errors.pipe(delay(3000), take(3))),
+    );
   }
 
-  index(): Post[] {
-    return this.entities;
+  show(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.postsApi}/${id}`);
   }
 
-  show(id: number): Post {
-    return this.entities.find((post) => post.id === id);
+  handleError(error: HttpErrorResponse): any {
+    return throwError('Something went wrong.');
   }
 }

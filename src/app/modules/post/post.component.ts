@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from './models/post.model';
 import { posts } from './posts';
 import { PostService } from './services/post.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-post',
@@ -14,14 +15,23 @@ export class PostComponent implements OnInit {
   entities: Post[];
   selectedId: number;
 
-  constructor(private postService: PostService, private route: ActivatedRoute) {
-    this.entities = this.postService.index();
-  }
+  constructor(
+    private postService: PostService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.selectedId = +params.get('id');
     });
+    const entities$ = this.postService.index();
+    const observer = {
+      next: (data: Post[]) => {
+        this.entities = data;
+      },
+      error: (error: HttpErrorResponse) => console.log(error),
+    };
+    entities$.subscribe(observer);
   }
 
   removeItem(item: Post): void {
